@@ -1,0 +1,20 @@
+# Godot 4+ specific ignores
+.godot/
+addons/
+tileset/
+
+# Godot-specific ignores
+.import/
+export.cfg
+export_presets.cfg
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+export/*
+assets/player/player2.aseprite.bak
+

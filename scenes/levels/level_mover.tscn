@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://yv4vdd2yissb"]
+
+[ext_resource type="Script" path="res://scenes/levels/level_mover.gd" id="1_0n86i"]
+[ext_resource type="Texture2D" uid="uid://cw7fimum0homj" path="res://addons/ActionIcon/Keyboard/Blank.png" id="1_nuoav"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="2_66trv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_35wnn"]
+size = Vector2(48, 60)
+
+[node name="level_mover" type="Area2D"]
+script = ExtResource("1_0n86i")
+
+[node name="Backround" type="Polygon2D" parent="."]
+color = Color(0.0313726, 0.0941176, 0.188235, 1)
+polygon = PackedVector2Array(-20, -60, -24, 0, 24, 0, 20, -60)
+
+[node name="Frame" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-28, 0, -24, -64, 24, -64, 28, 0, 24, 0, 20, -60, -20, -60, -24, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_35wnn")
+
+[node name="ActionIcon" type="TextureRect" parent="."]
+visible = false
+offset_left = -20.0
+offset_top = -104.0
+offset_right = 20.0
+offset_bottom = -64.0
+texture = ExtResource("1_nuoav")
+expand_mode = 3
+script = ExtResource("2_66trv")
+action_name = &"move_up"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

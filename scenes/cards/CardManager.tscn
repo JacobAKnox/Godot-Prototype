@@ -1,0 +1,12 @@
+[gd_scene load_steps=6 format=3 uid="uid://cronxrbtb8nnf"]
+
+[ext_resource type="Script" path="res://scenes/cards/CardManager.gd" id="1_il1h6"]
+[ext_resource type="Resource" uid="uid://s0buqfvhrx6m" path="res://cards/card_bomb.tres" id="1_jnpr1"]
+[ext_resource type="Resource" uid="uid://bstnps6xre5s6" path="res://cards/basic_attack.tres" id="2_f5xqe"]
+[ext_resource type="Resource" uid="uid://df54tgexkj3sa" path="res://cards/projectile_attack.tres" id="3_hohf1"]
+[ext_resource type="Resource" uid="uid://bj8vhhex5nrw8" path="res://cards/sword_attack.tres" id="3_ubgsk"]
+
+[node name="CardManager" type="ResourcePreloader"]
+resources = [PackedStringArray("card_basic", "card_bomb", "card_proj", "card_sword"), [ExtResource("2_f5xqe"), ExtResource("1_jnpr1"), ExtResource("3_hohf1"), ExtResource("3_ubgsk")]]
+script = ExtResource("1_il1h6")
+default_card = ExtResource("2_f5xqe")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://btbo7pv6obvqa"]
+
+[ext_resource type="Script" path="res://scenes/overrides/double_jump_override.gd" id="1_1126l"]
+
+[node name="DoubleJumpOverride" type="Node"]
+script = ExtResource("1_1126l")
+time = 0.01
+cancelable = true

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cypdj5dhkbn7x"]
+
+[ext_resource type="PackedScene" uid="uid://cdcvqnhxnlt3g" path="res://scenes/components/player_dectector.tscn" id="1_f7n4h"]
+[ext_resource type="Script" path="res://scenes/goal/Goal.gd" id="1_mb8kx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_riba1"]
+size = Vector2(48, 48)
+
+[node name="Goal" type="Node2D" groups=["Goal"]]
+script = ExtResource("1_mb8kx")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+color = Color(0.6, 0, 1, 1)
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[node name="PlayerDectector" parent="." instance=ExtResource("1_f7n4h")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDectector"]
+shape = SubResource("RectangleShape2D_riba1")

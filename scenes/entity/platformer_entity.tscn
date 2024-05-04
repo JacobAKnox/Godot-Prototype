@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dusref6vhi247"]
+
+[ext_resource type="Script" path="res://scenes/entity/platformer_entity.gd" id="1_7jdsr"]
+
+[node name="platformer_entity" type="CharacterBody2D"]
+collision_mask = 7
+script = ExtResource("1_7jdsr")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://q34hw4f20jbf"]
+
+[ext_resource type="Script" path="res://scenes/overrides/8DDashOverride.gd" id="1_vf2ji"]
+
+[node name="8DDashOverride" type="Node"]
+script = ExtResource("1_vf2ji")
+dash_speed = 800.0
+time = 0.1

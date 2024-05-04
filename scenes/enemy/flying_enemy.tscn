@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://js3ct7hd6rq1"]
+
+[ext_resource type="Script" path="res://scenes/enemy/flying_enemy.gd" id="1_55vch"]
+[ext_resource type="PackedScene" uid="uid://ds7ykkgiff777" path="res://scenes/enemy/health.tscn" id="2_j4rhk"]
+[ext_resource type="PackedScene" uid="uid://j7mdwi2lytko" path="res://scenes/components/seperator.tscn" id="8_1yq5q"]
+[ext_resource type="PackedScene" uid="uid://cxwvi5g4114j" path="res://scenes/components/hit_box.tscn" id="9_gc4sa"]
+[ext_resource type="PackedScene" uid="uid://b6gc3i0rsv1bp" path="res://scenes/components/stunnable.tscn" id="9_jbgj6"]
+[ext_resource type="PackedScene" uid="uid://b7wko4cw1lo5y" path="res://scenes/components/damage_box.tscn" id="10_1wl2p"]
+[ext_resource type="Script" path="res://addons/gfsm/fsm.gd" id="11_5hi7h"]
+[ext_resource type="Script" path="res://addons/gfsm/state.gd" id="12_qmasa"]
+[ext_resource type="PackedScene" uid="uid://cdcvqnhxnlt3g" path="res://scenes/components/player_dectector.tscn" id="13_kmt5r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nickr"]
+size = Vector2(22, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3a5b"]
+size = Vector2(32, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5cec0"]
+size = Vector2(24, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jjj7"]
+radius = 500.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8pkty"]
+radius = 48.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vo055"]
+radius = 216.0
+
+[node name="Flying Enemy" type="CharacterBody2D" groups=["boid", "enemy"]]
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_55vch")
+idle_speed = 50.0
+chase_speed = 200.0
+charge_speed = 600.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-2.38419e-07, 0)
+scale = Vector2(0.4, 0.3)
+color = Color(0.678431, 0, 0, 1)
+polygon = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nickr")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+
+[node name="Health" parent="." instance=ExtResource("2_j4rhk")]
+MAX_HEALTH = 3
+
+[node name="HitBox" parent="." instance=ExtResource("9_gc4sa")]
+
+[node name="HBox" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_d3a5b")
+
+[node name="DamageBox" parent="." instance=ExtResource("10_1wl2p")]
+damage = 1
+
+[node name="DBox" type="CollisionShape2D" parent="DamageBox"]
+shape = SubResource("RectangleShape2D_5cec0")
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("start_state")]
+script = ExtResource("11_5hi7h")
+start_state = NodePath("Loop")
+update_type = "Physics"
+
+[node name="Loop" type="Node" parent="FSM"]
+script = ExtResource("12_qmasa")
+triggers = {
+"player_near": "Chase"
+}
+
+[node name="Chase" type="Node" parent="FSM"]
+script = ExtResource("12_qmasa")
+triggers = {
+"charge": "Charge",
+"player_far": "Loop"
+}
+
+[node name="Charge" type="Node" parent="FSM"]
+script = ExtResource("12_qmasa")
+triggers = {
+"charge_done": "Chase",
+"nav_finished": "Chase"
+}
+
+[node name="PlayerDectector" parent="." instance=ExtResource("13_kmt5r")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDectector"]
+shape = SubResource("CircleShape2D_6jjj7")
+
+[node name="Seperator" parent="." instance=ExtResource("8_1yq5q")]
+
+[node name="SeperationDist" type="CollisionShape2D" parent="Seperator"]
+shape = SubResource("CircleShape2D_8pkty")
+
+[node name="ChargeTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+autostart = true
+
+[node name="ChargeDone" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ChargeRange" parent="." instance=ExtResource("13_kmt5r")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChargeRange"]
+shape = SubResource("CircleShape2D_vo055")
+
+[node name="Stunnable" parent="." instance=ExtResource("9_jbgj6")]
+
+[connection signal="died" from="Health" to="." method="_on_health_died"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="damage_taken" from="HitBox" to="." method="_on_hit_box_damage_taken"]
+[connection signal="damage_taken" from="HitBox" to="Health" method="apply_damage"]
+[connection signal="hazard" from="HitBox" to="." method="_on_hit_box_hazard"]
+[connection signal="on_transit" from="FSM" to="." method="_on_fsm_on_transit"]
+[connection signal="on_update" from="FSM" to="." method="_on_fsm_on_update"]
+[connection signal="player_far" from="PlayerDectector" to="." method="_on_player_dectector_player_far"]
+[connection signal="player_inside_update" from="PlayerDectector" to="." method="_on_player_dectector_player_inside_update"]
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
+[connection signal="timeout" from="ChargeDone" to="." method="_on_charge_done_timeout"]

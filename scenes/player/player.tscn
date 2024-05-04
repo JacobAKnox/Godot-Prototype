@@ -1,0 +1,106 @@
+[gd_scene load_steps=12 format=3 uid="uid://b5u4s0qtwafi6"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_f3dvy"]
+[ext_resource type="PackedScene" uid="uid://c3v1g2blb7qt3" path="res://scenes/hud/fps/fps_hud.tscn" id="2_500k8"]
+[ext_resource type="PackedScene" uid="uid://ce42emftmdk6g" path="res://scenes/overrides/knockback_override.tscn" id="2_m5jcb"]
+[ext_resource type="PackedScene" uid="uid://b2lo1xy344l63" path="res://scenes/hud/health/hp_hud.tscn" id="5_vsiv5"]
+[ext_resource type="PackedScene" uid="uid://cgmlqexh26rsy" path="res://scenes/cards/Deck.tscn" id="6_ppbx1"]
+[ext_resource type="Texture2D" uid="uid://0et6y11fpmv2" path="res://assets/player/player_sheet.png" id="7_dilcf"]
+[ext_resource type="PackedScene" uid="uid://ds7ykkgiff777" path="res://scenes/enemy/health.tscn" id="8_g72lg"]
+[ext_resource type="PackedScene" uid="uid://qog5hmgtc2he" path="res://scenes/goal/Compass.tscn" id="9_hge3c"]
+[ext_resource type="PackedScene" uid="uid://cxwvi5g4114j" path="res://scenes/components/hit_box.tscn" id="9_hj423"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_igl3w"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xha6n"]
+size = Vector2(30, 30)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+z_index = 2
+position = Vector2(0, 16)
+collision_mask = 2
+motion_mode = 1
+floor_constant_speed = true
+floor_snap_length = 8.0
+script = ExtResource("1_f3dvy")
+MAX_SPEED = 300.0
+GROUND_ACCELERATION = 3000.0
+GROUND_DRAG = 3000.0
+ATTACK_KNOCKBACK_VELOCITY = 150.0
+DASH_LENGTH = 4
+DASH_COOLDOWN_SEC = 0.5
+DASH_SPEED = 700.0
+EPSILON = 0.01
+BASE_COLOR = Color(0.247059, 0.0392157, 1, 1)
+INVINICIBLE_COLOR = Color(0.0784314, 0.862745, 1, 1)
+knockback_override = ExtResource("2_m5jcb")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(4, -16)
+scale = Vector2(1.5, 2)
+color = Color(0.247059, 0.0392157, 1, 1)
+polygon = PackedVector2Array(-13.3333, -8, -13.3333, 8, 8, 8, 8, -8)
+
+[node name="collider" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_igl3w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+editor_draw_limits = true
+
+[node name="FPS_HUD" parent="." instance=ExtResource("2_500k8")]
+
+[node name="AttackSpawn" type="Marker2D" parent="."]
+position = Vector2(0, -16)
+
+[node name="HPHud" parent="." instance=ExtResource("5_vsiv5")]
+
+[node name="Deck" parent="." instance=ExtResource("6_ppbx1")]
+
+[node name="OverrideTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="RespawnTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.25
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-2, -27)
+texture = ExtResource("7_dilcf")
+hframes = 5
+frame = 1
+
+[node name="Health" parent="." instance=ExtResource("8_g72lg")]
+MAX_HEALTH = 5
+INVINICBLE_SEC = 1.2
+
+[node name="HitBox" parent="." instance=ExtResource("9_hj423")]
+collision_layer = 16
+collision_mask = 72
+
+[node name="hurtbox" type="CollisionShape2D" parent="HitBox"]
+visible = false
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_xha6n")
+
+[node name="Aim" type="Polygon2D" parent="."]
+position = Vector2(0, -16)
+offset = Vector2(0, 24)
+polygon = PackedVector2Array(31, -24, 28, -33, 21, -43, 26, -32, 27, -24, 26, -16, 21, -5, 28, -15)
+
+[node name="CompassUI" parent="." instance=ExtResource("9_hge3c")]
+
+[connection signal="timeout" from="OverrideTimer" to="." method="_on_override_timer_timeout"]
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="damage_applied" from="Health" to="." method="damage_applied"]
+[connection signal="died" from="Health" to="." method="die"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_body_body_entered"]
+[connection signal="damage_taken" from="HitBox" to="Health" method="apply_damage"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwvblbbpismg6"]
+
+[ext_resource type="Script" path="res://scenes/levels/level_gen.gd" id="1_osgji"]
+[ext_resource type="PackedScene" uid="uid://b4xuywh4p43rg" path="res://scenes/enemy/enemy.tscn" id="2_77p8h"]
+[ext_resource type="TileSet" uid="uid://ckyqio0c5smi6" path="res://tileset/world.tres" id="2_dmtos"]
+[ext_resource type="PackedScene" uid="uid://yv4vdd2yissb" path="res://scenes/levels/level_mover.tscn" id="3_gnti5"]
+
+[node name="LevelGen" type="Node2D"]
+script = ExtResource("1_osgji")
+grid_size = Vector2i(5, 5)
+enemy = ExtResource("2_77p8h")
+exit = ExtResource("3_gnti5")
+next_level = "res://scenes/levels/level_gen.tscn"
+offset = Vector2(0, 32)
+
+[node name="Terrain" type="TileMap" parent="." groups=["damageable", "hazard", "terrain"]]
+tile_set = ExtResource("2_dmtos")
+format = 2
+layer_0/name = "Terrain"
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(288, 164)

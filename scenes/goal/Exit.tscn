@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpj2w2dmmlnmx"]
+
+[ext_resource type="PackedScene" uid="uid://cdcvqnhxnlt3g" path="res://scenes/components/player_dectector.tscn" id="1_08nm2"]
+[ext_resource type="Script" path="res://scenes/goal/Exit.gd" id="1_lqgmv"]
+[ext_resource type="Texture2D" uid="uid://cw7fimum0homj" path="res://addons/ActionIcon/Keyboard/Blank.png" id="2_x6okd"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="3_1g77u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvygc"]
+size = Vector2(32, 48)
+
+[node name="Exit" type="Node2D"]
+script = ExtResource("1_lqgmv")
+
+[node name="PlayerDectector" parent="." instance=ExtResource("1_08nm2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDectector"]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_pvygc")
+
+[node name="Frame" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, -32, -8, -24, -8, 24, 0, 32)
+
+[node name="open" type="Polygon2D" parent="."]
+visible = false
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 29, -6, 23, -6, -23, 0, -29)
+
+[node name="ActionIcon" type="TextureRect" parent="."]
+visible = false
+offset_left = -20.0
+offset_top = -104.0
+offset_right = 20.0
+offset_bottom = -64.0
+texture = ExtResource("2_x6okd")
+expand_mode = 3
+script = ExtResource("3_1g77u")
+action_name = &"interact"
+
+[connection signal="player_far" from="PlayerDectector" to="." method="_on_player_dectector_player_far"]
+[connection signal="player_near" from="PlayerDectector" to="." method="_on_player_dectector_player_near"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://s68403nqi52w"]
+
+[ext_resource type="Script" path="res://scenes/attacks/basic_projectile.gd" id="1_y677q"]
+[ext_resource type="PackedScene" uid="uid://b7wko4cw1lo5y" path="res://scenes/components/damage_box.tscn" id="2_ohb8f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acdvw"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31ipu"]
+size = Vector2(10, 10)
+
+[node name="BasicProjectile" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_y677q")
+SPEED = 300.0
+GRAVITY = 3.0
+MAX_BOUNCES = 3
+MAX_COLLISIONS = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_acdvw")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[node name="DamageBox" parent="." instance=ExtResource("2_ohb8f")]
+collision_layer = 32
+collision_mask = 4
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
+shape = SubResource("RectangleShape2D_31ipu")
+
+[connection signal="hit" from="DamageBox" to="." method="expire"]

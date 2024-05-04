@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch7n1wi0u81ie"]
+
+[ext_resource type="Script" path="res://scenes/goal/goal_spawns.gd" id="1_maxs0"]
+
+[node name="GoalSpawns" type="Node"]
+script = ExtResource("1_maxs0")

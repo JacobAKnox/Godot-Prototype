@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhslsynil36v2"]
+
+[ext_resource type="Script" path="res://scenes/UI/ExitButton.gd" id="1_tlem3"]
+
+[node name="ExitButton" type="Button"]
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "X"
+script = ExtResource("1_tlem3")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

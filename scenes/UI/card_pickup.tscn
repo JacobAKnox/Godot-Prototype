@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=3 uid="uid://blq8mhjrcdngb"]
+
+[ext_resource type="Script" path="res://scenes/UI/card_pickup.gd" id="1_y5xq3"]
+[ext_resource type="PackedScene" uid="uid://busg4kmil76tx" path="res://scenes/cards/CardDisplay.tscn" id="2_pd4oq"]
+[ext_resource type="PackedScene" uid="uid://d0am0at8ocsvb" path="res://scenes/UI/card_button.tscn" id="3_uvxpe"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ucysv"]
+color = Color(0, 0, 0, 0)
+
+[node name="CardPickup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y5xq3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0.168627, 0.168627, 0.168627, 0.215686)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+columns = 2
+
+[node name="CardDisplay" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer" instance=ExtResource("2_pd4oq")]
+layout_mode = 2
+
+[node name="Button" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay" instance=ExtResource("3_uvxpe")]
+layout_mode = 1
+
+[node name="CardDisplay2" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer" instance=ExtResource("2_pd4oq")]
+layout_mode = 2
+
+[node name="Button" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay2" instance=ExtResource("3_uvxpe")]
+layout_mode = 1
+
+[node name="CardDisplay3" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer" instance=ExtResource("2_pd4oq")]
+layout_mode = 2
+
+[node name="Button" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay3" instance=ExtResource("3_uvxpe")]
+layout_mode = 1
+
+[node name="CardDisplay4" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer" instance=ExtResource("2_pd4oq")]
+layout_mode = 2
+
+[node name="Button" parent="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay4" instance=ExtResource("3_uvxpe")]
+layout_mode = 1
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ucysv")
+
+[node name="CardDisplay" parent="MarginContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pd4oq")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Button" parent="MarginContainer/MarginContainer/HBoxContainer/CardDisplay" instance=ExtResource("3_uvxpe")]
+layout_mode = 1
+
+[connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay/Button" to="." method="_on_card_0_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay2/Button" to="." method="_on_card_1_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay3/Button" to="." method="_on_card_2_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/GridContainer/CardDisplay4/Button" to="." method="_on_card_3_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/CardDisplay/Button" to="." method="_on_new_card_button_pressed"]

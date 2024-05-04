@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci4gq8htobb2o"]
+
+[ext_resource type="StyleBox" uid="uid://vjeexrm3pmip" path="res://styles/seperator_style.tres" id="1_iuj1i"]
+[ext_resource type="Script" path="res://scenes/UI/simple_control_selector.gd" id="1_mwqw7"]
+[ext_resource type="Texture2D" uid="uid://cw7fimum0homj" path="res://addons/ActionIcon/Keyboard/Blank.png" id="2_kp7jq"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="3_nvfm4"]
+
+[node name="SimpleControlSelector" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mwqw7")
+nice_name = "Jump"
+
+[node name="InputName" type="Label" parent="."]
+layout_mode = 2
+text = "action"
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("1_iuj1i")
+
+[node name="ResetButton" type="Button" parent="." groups=["control_selector"]]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "reset
+"
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("1_iuj1i")
+
+[node name="KeyboardButton" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="KeyboardActionIcon" type="TextureRect" parent="KeyboardButton"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_kp7jq")
+script = ExtResource("3_nvfm4")
+action_name = &"jump"
+joypad_mode = 1
+
+[node name="VSeparator3" type="VSeparator" parent="."]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("1_iuj1i")
+
+[node name="ControllerButton" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ControllerActionIcon" type="TextureRect" parent="ControllerButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_kp7jq")
+script = ExtResource("3_nvfm4")
+action_name = &"jump"
+joypad_mode = 2
+
+[connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="KeyboardButton" to="." method="_on_keyboard_button_pressed"]
+[connection signal="pressed" from="ControllerButton" to="." method="_on_controller_button_pressed"]

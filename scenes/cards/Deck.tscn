@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgmlqexh26rsy"]
+
+[ext_resource type="Script" path="res://scenes/cards/deck.gd" id="1_uxhfm"]
+[ext_resource type="PackedScene" uid="uid://busg4kmil76tx" path="res://scenes/cards/CardDisplay.tscn" id="3_1rst7"]
+
+[node name="Deck" type="Node"]
+script = ExtResource("1_uxhfm")
+deck = Array[String](["card_sword", "card_proj", "card_bomb", "card_proj"])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -196.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="Current" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("3_1rst7")]
+layout_mode = 2
+
+[node name="1" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("3_1rst7")]
+layout_mode = 2
+
+[node name="2" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("3_1rst7")]
+layout_mode = 2
+
+[node name="3" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("3_1rst7")]
+layout_mode = 2
+
+[node name="DrawTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DrawTimer" to="." method="_on_draw_timer_timeout"]

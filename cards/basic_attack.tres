@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://bstnps6xre5s6"]
+
+[ext_resource type="PackedScene" uid="uid://458xhlsse7hc" path="res://scenes/attacks/basic_attack.tscn" id="1_eukfl"]
+[ext_resource type="Script" path="res://scripts/CardData.gd" id="1_wbrl1"]
+
+[resource]
+script = ExtResource("1_wbrl1")
+attack = ExtResource("1_eukfl")
+name = "basic"
+id = "card_basic"

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt6v1ky0p8cb6"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_5cfto"]
+
+[node name="Game" type="Node"]
+process_mode = 3
+script = ExtResource("1_5cfto")
+
+[node name="pausable" type="Node" parent="."]
+process_mode = 1

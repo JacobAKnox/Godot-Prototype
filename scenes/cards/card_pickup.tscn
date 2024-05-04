@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://cphu27ojk7owg"]
+
+[ext_resource type="Script" path="res://scenes/cards/card_pickup.gd" id="1_6uqre"]
+[ext_resource type="PackedScene" uid="uid://cdcvqnhxnlt3g" path="res://scenes/components/player_dectector.tscn" id="1_fe5vu"]
+[ext_resource type="Resource" uid="uid://df54tgexkj3sa" path="res://cards/projectile_attack.tres" id="2_qllxm"]
+[ext_resource type="Texture2D" uid="uid://cw7fimum0homj" path="res://addons/ActionIcon/Keyboard/Blank.png" id="3_youyg"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="4_173uu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m7rg"]
+size = Vector2(96, 96)
+
+[node name="CardPickup" type="Polygon2D"]
+color = Color(0.278431, 1, 0.796078, 1)
+polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
+script = ExtResource("1_6uqre")
+card = ExtResource("2_qllxm")
+
+[node name="PlayerDectector" parent="." instance=ExtResource("1_fe5vu")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDectector"]
+shape = SubResource("RectangleShape2D_0m7rg")
+
+[node name="ActionIcon" type="TextureRect" parent="."]
+visible = false
+offset_left = -20.0
+offset_top = -73.0
+offset_right = 20.0
+offset_bottom = -33.0
+texture = ExtResource("3_youyg")
+expand_mode = 3
+script = ExtResource("4_173uu")
+action_name = &"interact"
+
+[connection signal="player_far" from="PlayerDectector" to="." method="_on_player_dectector_player_far"]
+[connection signal="player_near" from="PlayerDectector" to="." method="_on_player_dectector_player_near"]

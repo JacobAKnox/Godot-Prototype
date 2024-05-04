@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1dfhoe1q684x"]
+
+[ext_resource type="Script" path="res://scenes/enemy/big_guy.gd" id="1_oomtc"]
+[ext_resource type="PackedScene" uid="uid://cxwvi5g4114j" path="res://scenes/components/hit_box.tscn" id="2_f3ux1"]
+[ext_resource type="PackedScene" uid="uid://b7wko4cw1lo5y" path="res://scenes/components/damage_box.tscn" id="3_rcugw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0kk7i"]
+size = Vector2(192, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnbgu"]
+size = Vector2(208, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4pnrp"]
+size = Vector2(176, 104)
+
+[node name="BigGuy" type="CharacterBody2D"]
+collision_mask = 66
+script = ExtResource("1_oomtc")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.380392, 0.380392, 0.380392, 1)
+polygon = PackedVector2Array(-96, -48, 96, -48, 96, 64, -96, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_0kk7i")
+
+[node name="HitBox" parent="." instance=ExtResource("2_f3ux1")]
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_bnbgu")
+
+[node name="DamageBox" parent="." instance=ExtResource("3_rcugw")]
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_4pnrp")

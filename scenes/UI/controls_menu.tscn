@@ -1,0 +1,80 @@
+[gd_scene load_steps=2 format=3 uid="uid://divxy7s6rdbdk"]
+
+[ext_resource type="PackedScene" uid="uid://ci4gq8htobb2o" path="res://scenes/UI/simple_control_selector.tscn" id="1_xv3bu"]
+
+[node name="ControlsMenu" type="GridContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 30
+columns = 2
+
+[node name="SimpleControlSelector3" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="SimpleControlSelector" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "move_up"
+nice_name = "Up"
+
+[node name="SimpleControlSelector2" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "dash"
+nice_name = "Dash"
+
+[node name="SimpleControlSelector4" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "move_down"
+nice_name = "Down"
+
+[node name="SimpleControlSelector5" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "attack"
+nice_name = "Attack"
+
+[node name="SimpleControlSelector6" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "move_left"
+nice_name = "Left"
+
+[node name="SimpleControlSelector7" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "basic_attack"
+nice_name = "Basic Attack"
+
+[node name="SimpleControlSelector8" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "move_right"
+nice_name = "Right"
+
+[node name="SimpleControlSelector9" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+action = "swap"
+nice_name = "Swap"
+
+[node name="SimpleControlSelector10" parent="." instance=ExtResource("1_xv3bu")]
+layout_mode = 2
+action = "pause"
+nice_name = "Pause"

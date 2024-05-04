@@ -1,0 +1,9 @@
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://cqvw60s245tjr"]
+
+[resource]
+resource_name = "unused"
+bg_color = Color(0.180392, 0.0196078, 0.909804, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10

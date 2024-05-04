@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cewbfv1wukkcw"]
+
+[ext_resource type="Script" path="res://scenes/attacks/enemy/enemy_sword.gd" id="1_h5dss"]
+[ext_resource type="PackedScene" uid="uid://b7wko4cw1lo5y" path="res://scenes/components/damage_box.tscn" id="2_82t0q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_akmdg"]
+size = Vector2(100, 80)
+
+[node name="Attack" type="Polygon2D"]
+polygon = PackedVector2Array(-52, -40, 4, -28, 40, -12, 52, 0, 48, 20, 28, 44, -24, 56, 20, 40, 36, 20, 40, 0, 24, -12, -8, -28)
+script = ExtResource("1_h5dss")
+
+[node name="DamageBox" parent="." instance=ExtResource("2_82t0q")]
+position = Vector2(0, 2.27374e-13)
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
+position = Vector2(2, 12)
+shape = SubResource("RectangleShape2D_akmdg")
+disabled = true

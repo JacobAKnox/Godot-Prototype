@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://biy8lkgmmtevx"]
+
+[ext_resource type="Script" path="res://scenes/levels/level1.gd" id="1_w06up"]
+[ext_resource type="TileSet" uid="uid://ckyqio0c5smi6" path="res://tileset/world.tres" id="2_v81hk"]
+[ext_resource type="PackedScene" uid="uid://yv4vdd2yissb" path="res://scenes/levels/level_mover.tscn" id="3_4iesv"]
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_w06up")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(0, -128)
+
+[node name="Terrain" type="TileMap" parent="." groups=["damageable", "hazard", "terrain"]]
+tile_set = ExtResource("2_v81hk")
+format = 2
+layer_0/name = "Terrain"
+layer_0/tile_data = PackedInt32Array(65535, 131073, 3, 0, 131073, 3, 1, 131073, 3, 2, 131073, 3, 3, 131073, 3, 65534, 131073, 3, 65533, 131073, 3, 65532, 393217, 4, -4, 1, 3, -65540, 1, 3, -131076, 1, 3, -196612, 1, 3, -262148, 1, 3, -327684, 1, 3, -393220, 1, 3, -458756, 1, 3, -524292, 1, 3, -589828, 1, 3, -655364, 1, 3, -720900, 1, 3, -786436, 1, 3, -851972, 1, 3, -917508, 1, 3, -983044, 1, 3, -1048580, 1, 3, -1114116, 1, 3, 4, 131073, 3, 5, 131073, 3, 6, 131073, 3, 7, 131073, 3, 8, 131073, 3, 9, 131073, 3, 10, 131073, 3, 11, 131073, 3, 12, 131073, 3, 13, 131073, 3, 14, 131073, 3, 15, 131073, 3, 16, 131073, 3, 17, 131073, 3, 18, 131073, 3, 19, 131073, 3, 20, 327681, 4, -65516, 1, 3, -131052, 1, 3, -196588, 1, 3, -262124, 1, 3, -327660, 1, 3, -393196, 1, 3, -458732, 1, 3, -917484, 1, 3, -983020, 1, 3, -1048556, 1, 3, -1114092, 1, 3, -1179628, 1, 3, -851948, 1, 3, -786412, 1, 3, -720876, 1, 3, -655340, 1, 3, -589804, 1, 3, -524268, 1, 3)
+
+[node name="level_mover" parent="." instance=ExtResource("3_4iesv")]
+position = Vector2(928, 0)
+target_level = "res://scenes/levels/level.tscn"

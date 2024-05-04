@@ -1,0 +1,195 @@
+[gd_scene load_steps=17 format=3 uid="uid://c3m8xr6dq5u54"]
+
+[ext_resource type="Script" path="res://scenes/enemy/spicy_enemy.gd" id="1_o3upj"]
+[ext_resource type="PackedScene" uid="uid://ds7ykkgiff777" path="res://scenes/enemy/health.tscn" id="2_dchjb"]
+[ext_resource type="PackedScene" uid="uid://b7wko4cw1lo5y" path="res://scenes/components/damage_box.tscn" id="3_cms35"]
+[ext_resource type="PackedScene" uid="uid://cxwvi5g4114j" path="res://scenes/components/hit_box.tscn" id="4_xj1r0"]
+[ext_resource type="PackedScene" uid="uid://cewbfv1wukkcw" path="res://scenes/attacks/enemy/enemy_sword.tscn" id="12_uh4oc"]
+[ext_resource type="PackedScene" uid="uid://cdcvqnhxnlt3g" path="res://scenes/components/player_dectector.tscn" id="12_y6k8x"]
+[ext_resource type="Script" path="res://addons/gfsm/fsm.gd" id="14_5bkn1"]
+[ext_resource type="Script" path="res://addons/gfsm/state.gd" id="15_0ty6p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svo2i"]
+size = Vector2(48, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clv02"]
+size = Vector2(56, 104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j0ewg"]
+size = Vector2(64, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ws7yc"]
+size = Vector2(768, 256)
+
+[sub_resource type="Animation" id="Animation_idney"]
+resource_name = "attack"
+length = 1.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 1.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"show_sword"
+}, {
+"args": [],
+"method": &"hide_sword"
+}, {
+"args": [],
+"method": &"animation_over"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hp0y8"]
+resource_name = "startle"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_chase"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2fmde"]
+_data = {
+"attack": SubResource("Animation_idney"),
+"startle": SubResource("Animation_hp0y8")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rgscg"]
+size = Vector2(168, 96)
+
+[node name="SpicyEnemy" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_o3upj")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-28, -52, 28, -52, 28, 52, -28, 52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_svo2i")
+
+[node name="Health" parent="." instance=ExtResource("2_dchjb")]
+MAX_HEALTH = 5
+INVINICBLE_SEC = 0.5
+
+[node name="DamageBox" parent="." instance=ExtResource("3_cms35")]
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
+shape = SubResource("RectangleShape2D_clv02")
+
+[node name="HitBox" parent="." instance=ExtResource("4_xj1r0")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_j0ewg")
+
+[node name="PlayerChase" parent="." instance=ExtResource("12_y6k8x")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlayerChase"]
+shape = SubResource("RectangleShape2D_ws7yc")
+
+[node name="TurnDelay" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.1
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2fmde")
+}
+
+[node name="AttackRange" parent="." instance=ExtResource("12_y6k8x")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_rgscg")
+
+[node name="RightFloorRay" type="RayCast2D" parent="."]
+position = Vector2(28, 48)
+target_position = Vector2(0, 8)
+collision_mask = 2
+
+[node name="LeftFloorRay" type="RayCast2D" parent="."]
+position = Vector2(-28, 48)
+target_position = Vector2(0, 8)
+collision_mask = 2
+
+[node name="Attack" parent="." instance=ExtResource("12_uh4oc")]
+visible = false
+OFFSET = Vector2(80, 0)
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("start_state")]
+script = ExtResource("14_5bkn1")
+start_state = NodePath("Left")
+update_type = "Physics"
+
+[node name="Left" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"patrol_turn": "Right",
+"player_near": "Startle"
+}
+
+[node name="Right" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"patrol_turn": "Left",
+"player_near": "Startle"
+}
+
+[node name="Startle" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"startle_over": "Chase"
+}
+
+[node name="Chase" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"attack_range": "Attack",
+"player_far": "Return"
+}
+
+[node name="Attack" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"anim_over": "Chase"
+}
+
+[node name="Return" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"in_patrol": "DirChoice"
+}
+
+[node name="DirChoice" type="Node" parent="FSM"]
+script = ExtResource("15_0ty6p")
+triggers = {
+"last_left": "Left",
+"last_right": "Right"
+}
+
+[connection signal="died" from="Health" to="." method="_on_health_died"]
+[connection signal="damage_taken" from="HitBox" to="Health" method="apply_damage"]
+[connection signal="hazard" from="HitBox" to="." method="_on_hit_box_hazard"]
+[connection signal="player_far" from="PlayerChase" to="." method="_on_player_chase_player_far"]
+[connection signal="player_near" from="PlayerChase" to="." method="_on_player_chase_player_near"]
+[connection signal="player_far" from="AttackRange" to="." method="_on_attack_range_player_far"]
+[connection signal="player_near" from="AttackRange" to="." method="_on_attack_range_player_near"]
+[connection signal="on_transit" from="FSM" to="." method="_on_fsm_transited"]
+[connection signal="on_update" from="FSM" to="." method="_on_state_machine_player_updated"]

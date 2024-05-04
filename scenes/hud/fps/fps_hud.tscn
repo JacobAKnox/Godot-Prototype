@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3v1g2blb7qt3"]
+
+[ext_resource type="Script" path="res://scenes/hud/fps/FPS_HUD.gd" id="1_jfl26"]
+
+[node name="FPS HUD" type="CanvasLayer"]
+script = ExtResource("1_jfl26")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0

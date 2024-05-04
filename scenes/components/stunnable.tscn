@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6gc3i0rsv1bp"]
+
+[ext_resource type="Script" path="res://scenes/components/stunnable.gd" id="1_knudg"]
+
+[node name="Stunnable" type="Timer"]
+wait_time = 0.5
+one_shot = true
+script = ExtResource("1_knudg")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

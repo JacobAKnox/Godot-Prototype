@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://qog5hmgtc2he"]
+
+[ext_resource type="Script" path="res://scenes/goal/Compass.gd" id="1_n8528"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a57o6"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="CompassUI" type="CanvasLayer"]
+script = ExtResource("1_n8528")
+
+[node name="Compass" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 4
+
+[node name="Compass" type="Polygon2D" parent="Compass"]
+position = Vector2(64, 64)
+color = Color(0.721569, 0.721569, 0.721569, 1)
+polygon = PackedVector2Array(0, -64, 48, -48, 64, 0, 48, 48, 0, 64, -48, 48, -64, 0, -48, -48)
+
+[node name="Needle" type="Polygon2D" parent="Compass"]
+position = Vector2(64, 64)
+color = Color(0.701961, 0.0431373, 0.0431373, 1)
+polygon = PackedVector2Array(-16, 0, 0, -8, 56, 0, 0, 8)
+
+[node name="ProgressBar" type="ProgressBar" parent="Compass"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -24.0
+offset_top = -8.0
+offset_right = -20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+rotation = -1.57079
+theme_override_styles/fill = SubResource("StyleBoxFlat_a57o6")
+max_value = 1.0
+fill_mode = 2
+show_percentage = false
+
+[node name="CollectionDelay" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Key" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -48.0
+offset_right = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Polygon2D" type="Polygon2D" parent="Key"]
+polygon = PackedVector2Array(-40, -40, 88, -40, 88, 8, -40, 8)
+
+[connection signal="timeout" from="CollectionDelay" to="." method="_on_collection_delay_timeout"]
