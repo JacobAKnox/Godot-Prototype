@@ -3,7 +3,7 @@ This is a prototype for a game in Godot.
 It started as a sidescrolling platformer, but has transitioned into something like a cross between [Clank](https://www.direwolfdigital.com/clank/) and [Hades](https://www.supergiantgames.com/games/hades/).
 I have been focusing on mechanics over visuals for now. The project is on hold while I focus on Junior Project.
 
-There are playable builds for windows and linux in ./export. The goal of the game is to follow the compass to the artifact and hold interact to collect it. Once you have the artifact you need to return to the entrance door.
+There are playable builds for windows and linux in ./builds. The goal of the game is to follow the compass to the artifact and hold interact to collect it. Once you have the artifact you need to return to the entrance door.
 
 ## Menu system
 In order to handle menus for the game I created a global menu manager at [menu_manager.gd](./scenes/UI/menu_manager.gd).
